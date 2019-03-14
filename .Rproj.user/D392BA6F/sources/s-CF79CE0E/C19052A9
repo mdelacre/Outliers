@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1552563116324.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3726266611",
+    "id" : "C19052A9",
+    "lastKnownWriteTime" : 1552577415,
+    "last_content_update" : 1552577415675,
+    "path" : "~/Github_projects/Outliers/Outliers.rmd",
+    "project_path" : "Outliers.rmd",
+    "properties" : {
+        "cursorPosition" : "144,47",
+        "scrollLine" : "141"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
