@@ -21,10 +21,10 @@ affiliation:
   institution: Université Libre de Bruxelles, Service of Analysis of the Data (SAD),
     Bruxelles, Belgium
 - id: '2'
-  institution: 'Eindhoven University of Technology, Human Technology Interaction Group,
-    Eindhoven, the Netherlands '
+  institution: Eindhoven University of Technology, Human Technology Interaction Group,
+    Eindhoven, the Netherlands
 - id: '3'
-  institution: 'universit? de Christohe Ley '
+  institution: Universiteit Gent, Department of Applied Mathematics, Computer Science and Statistics, Gent, Belgium
 
 output: papaja::apa6_pdf
 
@@ -179,7 +179,7 @@ In conclusion, a useful tool could be a mathematical algorithm that evaluates th
 2) Do not use the mean or variance as indicators but the MAD for univariate outliers, with a cut off of 3 [for more information see @Leys_et_al_2013], or the MCD75 (or the MCD50 if you suspect the presence of more than 25% of outlying values) for the multivariate outliers, with a chi-square at p = .001, instead [for more information see @Leys_et_al_2013].
 3) Decide on outlier handling before seeing the results of the main analyses and preregister the study at, for example, the Open Science Framework (http://openscienceframework.org/)
 4) Decide on outlier handling by justifying your choice of keeping, removing or correcting outliers based on the soundest arguments, at the best of researchers knowledge of the field of research.
-5) If preregistration is not possible, report the outcomes both with and without outliers or on the basis of alternative methods [such as Welsch tests, Yuen-Welsch test, or nonparametric tests, see for example @Bakker_and_Wicherts_2014; @Leys_and_Schumann_2010; @ Sheskin_2004]
+5) If preregistration is not possible, report the outcomes both with and without outliers or on the basis of alternative methods [such as Welsch tests, Yuen-Welsch test, or nonparametric tests, see for example @Bakker_and_Wicherts_2014; @Leys_and_Schumann_2010; @Sheskin_2004]
 6) Report transparently about how outliers were handled in the result section.
 
 
