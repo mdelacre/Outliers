@@ -230,11 +230,31 @@ Lastly, we strongly encourage researchers to report information about outliers, 
 \hypertarget{perspectives}{%
 \section{Perspectives}\label{perspectives}}
 
-Although we provided some guidelines to manage outliers, there are interesting questions that could be addressed in meta-scientific research. Given the current technological advances in the area of big data analysis, machine learning or data collection methods, psychologists have more and more opportunities to work on large data sets ({\textbf{???}}; Chang, McAleer, \& Wong, 2018). In such context, an interesting research question is whether outliers in a database appear randomly, or whether outliers seem to follow a pattern that could be detected in such large data sets. This could be used to identify the nature of the outliers that researchers detect and provide some suggestions for how to manage them. Four situations can be foreseen: (1) outliers are randomly distributed and quite rare; (2) outliers are randomly distributed and numerous; (3) outliers follow a pattern but are quite rare; (4) outliers follow a pattern and are numerous. The case (1) suggests that outliers belong to the distribution of interest (if the number of outliers is consistent with what should be expected in the distribution), and, as such, should be kept. The case (2) would be difficult to interpret. It would suggest that a large amount of values is randomly influenced by an unknown moderator (or several) able to exert its influence on any variable. We could be tempted to keep them for pragmatic reasons (i.e., to avoid the loss of a large number of data) but should then address the problem in discussion. In (3) and (4), a pattern emerges, which might suggest the presence of a moderator (of theoretical interest or not). Whenever a pattern emerges (e.g., when the answers of a given participant are consistently outlying from one variable to another), we recommend removing outliers and, eventually, trying to understand the nature of the moderator in future studies.
+Although we provided some guidelines to manage outliers, there are interesting questions that could be addressed in meta-scientific research. Given the current technological advances in the area of big data analysis, machine learning or data collection methods, psychologists have more and more opportunities to work on large data sets (Chang, McAleer, \& Wong, 2018; Yarkoni \& Westfall, 2017). In such context, an interesting research question is whether outliers in a database appear randomly, or whether outliers seem to follow a pattern that could be detected in such large data sets. This could be used to identify the nature of the outliers that researchers detect and provide some suggestions for how to manage them. Four situations can be foreseen: (1) outliers are randomly distributed and quite rare; (2) outliers are randomly distributed and numerous; (3) outliers follow a pattern but are quite rare; (4) outliers follow a pattern and are numerous. The case (1) suggests that outliers belong to the distribution of interest (if the number of outliers is consistent with what should be expected in the distribution), and, as such, should be kept. The case (2) would be difficult to interpret. It would suggest that a large amount of values is randomly influenced by an unknown moderator (or several) able to exert its influence on any variable. We could be tempted to keep them for pragmatic reasons (i.e., to avoid the loss of a large number of data) but should then address the problem in discussion. In (3) and (4), a pattern emerges, which might suggest the presence of a moderator (of theoretical interest or not). Whenever a pattern emerges (e.g., when the answers of a given participant are consistently outlying from one variable to another), we recommend removing outliers and, eventually, trying to understand the nature of the moderator in future studies.
 
 To go one step further in this line of thinking, some outliers could appear randomly whereas others could follow a pattern. For example, one could suspect that outlying values close to the cutoff belong more likely to the distribution of interest than outliers far from the cutoff (since the further they are the more likely they belong to an alternative distribution). Therefore, outliers close to the cutoff could be randomly distributed in the data base, whereas further outliers could follow a pattern. This idea is theoretically relevant, but implies serious hurdles to be overcome, such as devising rules to split outliers in two subsets of interest (one with a pattern the other randomly distributed) without generating false detection.
 
 In conclusion, a useful tool could be a mathematical algorithm that evaluates the detected outliers in a database in order to detect patterns. This tool could also determine whether one subset of outliers follows a pattern whereas other subsets are randomly distributed. It could guide researchers' decisions on how to cope with these types of outliers. However, we currently do not have such a tool and we will leave this topic for further studies.
+
+\hypertarget{summary-of-the-main-recommendations}{%
+\section{Summary of the main recommendations}\label{summary-of-the-main-recommendations}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Correct or delete obvious erroneous values;
+\item
+  Do not use the mean or variance as indicators but the MAD for univariate outliers, with a cut off of 3 (for more information see Leys et al., 2013), or the MCD75 (or the MCD50 if you suspect the presence of more than 25\% of outlying values) for the multivariate outliers, with a chi-square at p = .001, instead (for more information see Leys et al., 2013).
+\item
+  Decide on outlier handling before seeing the results of the main analyses and preregister the study at, for example, the Open Science Framework (\url{http://openscienceframework.org/})
+\item
+  Decide on outlier handling by justifying your choice of keeping, removing or correcting outliers based on the soundest arguments, at the best of researchers knowledge of the field of research.
+\item
+  If preregistration is not possible, report the outcomes both with and without outliers or on the basis of alternative methods {[}such as Welsch tests, Yuen-Welsch test, or nonparametric tests, see for example Bakker and Wicherts (2014); Leys and Schumann (2010); @ Sheskin\_2004{]}
+\item
+  Report transparently about how outliers were handled in the result section.
+\end{enumerate}
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
@@ -292,6 +312,9 @@ Leys, C., Klein, O., Dominicy, Y., \& Ley, C. (2018). Detecting multivariate out
 \leavevmode\hypertarget{ref-Leys_et_al_2013}{}%
 Leys, C., Ley, C., Klein, O., Bernard, P., \& Licata, L. (2013). Detecting outliers: Do not use standard deviation around the mean, use absolute deviation around the median. \emph{Journal of Experimental Social Psychology}, \emph{49}(4), 764--766. doi:\href{https://doi.org/10.1016/j.jesp.2013.03.013}{10.1016/j.jesp.2013.03.013}
 
+\leavevmode\hypertarget{ref-Leys_and_Schumann_2010}{}%
+Leys, C., \& Schumann, S. (2010). A nonparametric method to analyze interactions: The adjusted rank transform test. \emph{Journal of Experimental Social Psychology}, \emph{46}(4), 684--688. doi:\href{https://doi.org/10.1016/j.jesp.2010.02.007}{10.1016/j.jesp.2010.02.007}
+
 \leavevmode\hypertarget{ref-Mahalanobis_1930}{}%
 Mahalanobis, P.-C. (1930). On tests and meassures of groups divergence, theoretical formulae. \emph{International Journal of the Asiatic Society of Bengal}, \emph{26}, 541--588.
 
@@ -324,6 +347,9 @@ Veer, A.-E. van't, \& Giner-Sorolla, R. (2016). Pre-registration in social psych
 
 \leavevmode\hypertarget{ref-Wicherts_et_al_2016}{}%
 Wicherts, J.-M., Veldkamp, C.-L., Augusteijn, H.-E., Bakker, M., Van Aert, R., \& Van Assen, M.-A. (2016). Degrees of freedom in planning, running, analyzing, and reporting psychological studies: A checklist to avoid p-hacking. \emph{Frontiers in Psychology}, \emph{7}(1832), 1--12. doi:\href{https://doi.org/10.3389/fpsyg.2016.01832}{10.3389/fpsyg.2016.01832}
+
+\leavevmode\hypertarget{ref-Yarkoni_Westfall_2017}{}%
+Yarkoni, T., \& Westfall, J. (2017). Choosing prediction over explanation in psychology: Lessons from machine learning. \emph{Perspectives on Psychological Science}, \emph{12}(6), 1100--1122. doi:\href{https://doi.org/10.1177/1745691617693393}{10.1177/1745691617693393}
 
 
 \end{document}

@@ -173,6 +173,16 @@ To go one step further in this line of thinking, some outliers could appear rand
 
 In conclusion, a useful tool could be a mathematical algorithm that evaluates the detected outliers in a database in order to detect patterns. This tool could also determine whether one subset of outliers follows a pattern whereas other subsets are randomly distributed. It could guide researchers’ decisions on how to cope with these types of outliers. However, we currently do not have such a tool and we will leave this topic for further studies. 
 
+# Summary of the main recommendations 
+
+1) Correct or delete obvious erroneous values; 
+2) Do not use the mean or variance as indicators but the MAD for univariate outliers, with a cut off of 3 [for more information see @Leys_et_al_2013], or the MCD75 (or the MCD50 if you suspect the presence of more than 25% of outlying values) for the multivariate outliers, with a chi-square at p = .001, instead [for more information see @Leys_et_al_2013].
+3) Decide on outlier handling before seeing the results of the main analyses and preregister the study at, for example, the Open Science Framework (http://openscienceframework.org/)
+4) Decide on outlier handling by justifying your choice of keeping, removing or correcting outliers based on the soundest arguments, at the best of researchers knowledge of the field of research.
+5) If preregistration is not possible, report the outcomes both with and without outliers or on the basis of alternative methods [such as Welsch tests, Yuen-Welsch test, or nonparametric tests, see for example @Bakker_and_Wicherts_2014; @Leys_and_Schumann_2010; @ Sheskin_2004]
+6) Report transparently about how outliers were handled in the result section.
+
+
 # Conclusion
  
 In this paper, we stressed the importance of outliers in several ways: to detect error outliers; to gain theoretical insights by identifying new moderators that can cause outlying values; to improve the robustness of the statistical analyses. We also underlined the problem resulting from the decision on how to manage outliers based on the results yielded by each strategy. Lastly, we proposed some recommendations based on the quite recent opportunity provided by platforms allowing to pre-register researchers’ studies. We argued that, above any other considerations, what matters most in order to maximize the accuracy and the credibility of a given research is to take all possible decisions on outliers’ detection and coping strategies prior to any data analysis. 

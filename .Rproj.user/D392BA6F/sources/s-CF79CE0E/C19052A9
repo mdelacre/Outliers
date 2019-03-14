@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "57917568",
     "id" : "C19052A9",
-    "lastKnownWriteTime" : 1552581482,
-    "last_content_update" : 1552581482323,
+    "lastKnownWriteTime" : 1552582218,
+    "last_content_update" : 1552582218091,
     "path" : "~/Github_projects/Outliers/Outliers.rmd",
     "project_path" : "Outliers.rmd",
     "properties" : {
-        "cursorPosition" : "179,8",
-        "scrollLine" : "173"
+        "cursorPosition" : "175,38",
+        "scrollLine" : "172"
     },
     "relative_order" : 2,
     "source_on_save" : false,

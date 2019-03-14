@@ -70,6 +70,19 @@
   pages = {20},
 }
 
+@article{Leys_and_Schumann_2010,
+  title = {A nonparametric method to analyze interactions: The adjusted rank transform test},
+  doi = {10.1016/j.jesp.2010.02.007},
+  language = {en},
+  author = {Leys, C. and Schumann, S.},
+  journal = {Journal of Experimental Social Psychology},
+  volume = {46},
+  number = {4},
+  year = {2010},
+  pages = {684-688},
+}
+
+
 @article{Leys_et_al_2013,
   title = {Detecting outliers: Do not use standard deviation around the mean, use absolute deviation around the median},
   doi = {10.1016/j.jesp.2013.03.013},
@@ -173,7 +186,7 @@
   pages = {1-12},
 }
 
-@article{Yarkoni_Wesetfall_2017,
+@article{Yarkoni_Westfall_2017,
   title = {Choosing prediction over explanation in psychology: Lessons from machine learning},
   doi = {10.1177/1745691617693393},
   language = {en},
