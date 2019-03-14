@@ -22,6 +22,18 @@
   pages = {409-427},
 }
 
+@article{Chang_et_al_2018,
+  title = {Big data, computational science, economics, finance, marketing, management, and psychology: connections},
+  doi = {10.3390/jrfm11010015},
+  language = {en},
+  author = {Chang, C-L. and McAleer, M. and Wong, W-K.},
+  journal = {Journal of Risk and Financial Management},
+  volume = {11},
+  number = {1},
+  year = {2018},
+  pages = {15},
+}
+
 @article{Cousineau_Chartier_2010,
   title = {Outliers detection and treatment: a review},
   doi = {10.21500/20112084.844},
@@ -159,6 +171,18 @@
   number = {1832},
   year = {2016},
   pages = {1-12},
+}
+
+@article{Yarkoni_Wesetfall_2017,
+  title = {Choosing prediction over explanation in psychology: Lessons from machine learning},
+  doi = {10.1177/1745691617693393},
+  language = {en},
+  author = {Yarkoni, T. and Westfall, J.},
+  journal = {Perspectives on Psychological Science},
+  volume = {12},
+  number = {6},
+  year = {2017},
+  pages = {1100-1122},
 }
 
 @book{Abelson_1995,
