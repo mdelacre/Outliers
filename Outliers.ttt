@@ -1,0 +1,20 @@
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\endhead
+\begin{minipage}[t]{0.15\columnwidth}\raggedright
+Error\strut
+\end{minipage} & \begin{minipage}[t]{0.79\columnwidth}\raggedright
+\emph{e.g., coding error}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright
+Interesting\strut
+\end{minipage} & \begin{minipage}[t]{0.79\columnwidth}\raggedright
+\emph{e.g., moderator underlying a potentially interesing psychological process}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright
+Random\strut
+\end{minipage} & \begin{minipage}[t]{0.79\columnwidth}\raggedright
+\emph{e.g., a very large value of a given distribution}\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
