@@ -26,9 +26,13 @@ affiliation:
 - id: '3'
   institution: Universiteit Gent, Department of Applied Mathematics, Computer Science and Statistics, Gent, Belgium
 
-output: papaja::apa6_pdf
+output:
+  papaja::apa6_pdf:
+    includes:
+      fig_caption       : FALSE
 
-bibliography: outliers-reference.bib
+
+bibliography: Outliers-reference.bib
 
 classoption: man
 
@@ -60,8 +64,7 @@ wordcount: ''
   
 ```{r setup, include = FALSE}
 library("papaja")
-library(devtools)
-install_github("mdelacre/Routliers")
+library("devtools")
 ```
 
 ```{r analysis-preferences}
@@ -107,16 +110,132 @@ Another relevant distinction is the difference between univariate and multivaria
 
 Now, let us imagine a cohort of human beings. An observation of a 5 ft 2 in (157 cm) tall person will not be surprising since it is quite a typical height. An observation of 64 lbs (29 kg) will not be surprising either, since many children have this weight. However, weighting 64 lbs *and* being 5 ft 2 in tall is surprising. This example is Lizzie Velasquez, born with a Marfanoid–progeroid–lipodystrophy syndrome that prevents her from gaining weight or accumulating body fat. Values that become surprising when several dimensions are taken into account are called *multivariate* outliers. Multivariate outliers are very important to detect, for example before performing structural equation modeling (SEM), where multivariate outliers can easily jeopardize fit indices [@Kline_2015].
 
-An interesting way to emphasize the stakes of multivariate outliers is to describe the principle of a regression coefficient (i.e., the slope of the regression line) in a regression between to variable Y (set as *DV*) and X (set as *IV*). Firstly, remember that the dot of coordinates ($\bar {X}$, $\bar {Y}$), named G-point (for Gravity-point), necessarily belongs to the regression line. Next, the slope of this regression line can be computed by taking each individual slope of each line linking each data of the cloud and the G-point and multiplying these slopes by an individual weight ($\omega_i$). The weight is computed by taking the distance between the X coordinate of a given observation and the $\bar{X}$ and dividing that distance by the sum of all distances (see equation below). 
+An interesting way to emphasize the stakes of multivariate outliers is to describe the principle of a regression coefficient (i.e., the slope of the regression line) in a regression between to variable Y (set as *dependent variable*) and X (set as *independent variable*). Firstly, remember that the dot of coordinates ($\bar {X}$, $\bar {Y}$), named G-point (for Gravity-point; see the crossing of the two grey lines in Figure 1), necessarily belongs to the regression line. Next, the slope of this regression line can be computed by taking the sum of individual slopes of each line linking each data of the scatter dot and the G-point ( see the arrows in Figure 1),multiplied by individual weight ($\omega_i$). 
 
-$$b_i=\sum\omega_i(\frac{Y_i-\bar{Y}}{ X_i-\bar{X}})= \sum \frac{(X_i-\bar{X})^2}{\sum(X_i-\bar{X})^2} (\frac{Y_i-\bar{Y}}{X_i-\bar{X}})$$
+```{r, individualslopes, fig.cap="Illustration of individual slopes of lines linking all data of the scatter dot and the G-point "} 
+Y=c(33,36,32,39,35,35,34,36,35) 
+X=c(50,70,88,110,125,142,162,178,200) 
+plot(X,Y,pch=19,cex=.8,ylim=c(25,45),xlim=c(5,250),axes=F)
+abline(h=mean(Y),lty=1,col="lightgrey")
+abline(v=mean(X),lty=1,col="grey")
+axis(1,at=seq(0,250,25))
+axis(2)
+for (i in seq_len(length(X))){
+  if(X[i]!=mean(X)|Y[i]!=mean(Y)){
+  arrows(mean(X),mean(Y),X[i],Y[i],length=.1,lty=2)     
+  }
+}
+text(mean(X),45,bquote(bar(x)),pos=4,col="lightgrey")
+text(250,mean(Y),bquote(bar(y)),pos=1,col="grey")
+```
 
-Given this equation, one can see that the impact of an outlying value of $Y_i$ on the regression slope will depend on the distance between the $X_i$ coordinate of this data and the $\bar{X}$. If the data is an outlier on Y but has an X coordinate equal to $\bar{X}$ (i.e. $X_i$=$\bar{X}$), then the $\omega_i$ will be equal to zero (i.e. $\omega_i$ = 0) and there is no consequence of this outlying Y on the slope of the regression line. On the contrary, if Y is an outlier that is also outlying on X (i.e. $X_i$ >> $\bar{X}$ or $X_i$ << $\bar{X}$), then the $\omega_i$ will be high and the influence on the regression slope can be tremendous.
+Individual slopes are computed as follows:
 
+\begin{equation} 
+slope_i = \frac{Y_i-\bar{Y}}{X_i-\bar{X}}
+(\#eq:individualslope)
+\end{equation} 
+
+Individual weights are computed by taking the distance between the X coordinate of a given observation and $\bar{X}$ and dividing that distance by the sum of all distances:
+
+\begin{equation} 
+\omega_i = \frac{(X_i-\bar{X})^2}{\sum(X_i-\bar{X})^2)}
+(\#eq:individualslope)
+\end{equation} 
+
+As a consequence, the slope of the regression line can be computed as follows:
+
+\begin{equation} 
+b_i=\sum\omega_i(\frac{Y_i-\bar{Y}}{ X_i-\bar{X}})= \sum \frac{(X_i-\bar{X})^2}{\sum(X_i-\bar{X})^2} (\frac{Y_i-\bar{Y}}{X_i-\bar{X}})
+(\#eq:regressionslope)
+\end{equation} 
+
+Given this equation, an individual having an extremely large or low coordinate on the Y axis will unequally influence the regression slope depending on the distance between the $X_i$ coordinate of this individual and $\bar{X}$. As an illustration, Figure 2 shows 4 scatter dots. In plot a, the coordinate of 3 points on the Y axis exactly equals $\bar{Y}$ (see points A, B and C in plot a). In plots b, c and d, the coordinate of one of these 3 points is modified in order that the point is moved away from $\bar{Y}$. If an observation is extremely high on the Y axis but its coordinate on the X axis exactly equals $\bar{X}$ (i.e. $X_i$=$\bar{X}$), there is no consequence on the slope of the regression line (because $\omega_i$ = 0; see plot b). On the contrary, if an observation is extremely high on both the Y axis and the X axis, the influence on the regression slope can be tremendous and the further the coordinate on the X axis from $\bar{X}$, the higher the impact (because $\omega_i$ increases; see plots c and d).
+
+```{r, outimpact, fig.cap="Impact of a an individual having extremely large or low coordinate on the Y axis, on the regression slope, as a function of its coordinate on the X axis"} 
+par(mfrow=c(2,2),xpd=F,mar=c(2,2,1,1))
+
+# Plot a
+Y1=c(33,36,32,39,35,35,34,36,35) 
+X1=c(50,70,88,110,125,142,162,178,200) 
+plot(X1,Y1,pch=19,cex=.8,ylim=c(25,45),xlim=c(25,225),axes=F, main="plot a")
+axis(1,at=seq(25,225,25))
+axis(2)
+abline(h=mean(Y1),col="darkgrey",lty=3)
+abline(v=mean(X1),col="darkgrey",lty=3)
+abline(lm(Y1 ~ X1)$coefficients[1],lm(Y1 ~ X1)$coefficients[2])
+text(mean(X1),44,bquote(bar(x)),pos=4,col="darkgrey")
+text(230,mean(Y1),bquote(bar(y)),pos=1,col="darkgrey")
+
+run=0
+for (i in seq_len(length(X1))){
+  if(Y1[i]==35){
+    run=run+1
+    text(X1[i],Y1[i],LETTERS[run],pos=1)
+    }
+}
+text(238,38, paste("Y","=",round(lm(Y1 ~ X1)$coefficients[1],3),"+",round(lm(Y1 ~ X1)$coefficients[2],3),"X"),pos=2,srt=lm(Y1 ~ X1)$coefficients[2]*360)
+
+#Plot b
+Y2=c(33,36,32,39,45,35,34,36,35) 
+X2=c(50,70,88,110,125,142,162,178,200) 
+plot(X2,Y2,pch=19,cex=.8,ylim=c(25,45),xlim=c(25,225),axes=F, main="plot b")
+axis(1,at=seq(25,225,25))
+axis(2)
+abline(h=mean(Y2),col="darkgrey",lty=3)
+abline(v=mean(X2),col="darkgrey",lty=3)
+abline(lm(Y2 ~ X2)$coefficients[1],lm(Y2 ~ X2)$coefficients[2])
+text(mean(X2),44,bquote(bar(x)),pos=4,col="darkgrey")
+text(230,mean(Y2),bquote(bar(y)),pos=1,col="darkgrey")
+run=0
+for (i in c(5,6,9)){
+    run=run+1
+    text(X2[i],Y2[i],LETTERS[run],pos=1)
+  }
+
+text(238,38, paste("Y","=",round(lm(Y2 ~ X2)$coefficients[1],3),"+",round(lm(Y2 ~ X2)$coefficients[2],3),"X"),pos=2,srt=lm(Y2 ~ X2)$coefficients[2]*360)
+
+#plot c
+Y3=c(33,36,32,39,35,45,34,36,35) 
+X3=c(50,70,88,110,125,142,162,178,200) 
+plot(X3,Y3,pch=19,cex=.8,ylim=c(25,45),xlim=c(25,225),axes=F, main="plot c")
+axis(1,at=seq(25,225,25))
+axis(2)
+abline(h=mean(Y3),col="darkgrey",lty=3)
+abline(v=mean(X3),col="darkgrey",lty=3)
+abline(lm(Y3 ~ X3)$coefficients[1],lm(Y3 ~ X3)$coefficients[2])
+text(mean(X3),44,bquote(bar(x)),pos=4,col="darkgrey")
+text(230,mean(Y3),bquote(bar(y)),pos=1,col="darkgrey")
+run=0
+for (i in c(5,6,9)){
+  run=run+1
+  text(X3[i],Y3[i],LETTERS[run],pos=1)
+}
+
+text(238,39.5, paste("Y","=",round(lm(Y3 ~ X3)$coefficients[1],3),"+",round(lm(Y3 ~ X3)$coefficients[2],3),"X"),pos=2,srt=lm(Y3 ~ X3)$coefficients[2]*360)
+
+#plot d
+Y4=c(33,36,32,39,35,35,34,36,45) 
+X4=c(50,70,88,110,125,142,162,178,200) 
+plot(X4,Y4,pch=19,cex=.8,ylim=c(25,45),xlim=c(25,225),axes=F, main="plot d")
+axis(1,at=seq(25,225,25))
+axis(2)
+abline(h=mean(Y4),col="darkgrey",lty=3)
+abline(v=mean(X4),col="darkgrey",lty=3)
+abline(lm(Y4 ~ X4)$coefficients[1],lm(Y4 ~ X4)$coefficients[2])
+text(mean(X4),44,bquote(bar(x)),pos=4,col="darkgrey")
+text(230,mean(Y4),bquote(bar(y)),pos=1,col="darkgrey")
+run=0
+for (i in c(5,6,9)){
+  run=run+1
+  text(X4[i],Y4[i],LETTERS[run],pos=1)
+}
+
+text(238,42.5, paste("Y","=",round(lm(Y4 ~ X4)$coefficients[1],3),"+",round(lm(Y4 ~ X4)$coefficients[2],3),"X"),pos=2,srt=lm(Y4 ~ X4)$coefficients[2]*360)
+
+```
 
 The detection of multivariate outliers relies on different methods than the detection of univariate outliers. Univariate outliers have to be detected as values too far from a robust central tendency indicator, while multivariate outliers have to be detected as values too far from a robust ellipse (or a more complex multidimensional cloud when there are more than two dimensions) that includes most observations [@Cousineau_Chartier_2010]. We will present recommended approaches for univariate and multivariate outlier detection later in this article, but we will first discuss why checking outliers is important, how they can be detected, and how they should be managed when detected.
-
-RAJOUTER FIGURE 1 ici (4 graphiques, 8 points identiques, et ensuite, on en déplace 1, puis on le remet et on déplace le deuxèime, puis on le remet et on déplace le troisième, de sorte qu'entre les quatre graphes, il n'y ait tj que un seul des points qui change!) Note: légende: Effet des valeurs aberrantes (triangle vert, carré orange, cercle bleu) sur le coefficient b1 en fonction de leur distance par rapport à Xmoy. 
 
 # Why Are Outliers Important? 
 
@@ -136,7 +255,7 @@ In addition to the outlier detection method, a second important choice researche
 
 Finally, it is important to specify that outlier detection is a procedure that is applied only once to a dataset. A common mistake is to detect outliers, manage them (e.g., remove them, or recode them), and then reapply the outlier detection procedure on the new changed dataset. 
 
-In order to help researchers to detect and visualize outliers based on robust methods, we created an R package (see https://github.com/mdelacre/Routliers). *outliers_mad* and *plot_outliers_mad* functions are created in order to respectively detect and visualise univariate outliers, based on the MAD method. In the same way of thinking, *outliers_mcd* and *plot_outliers_mcd* functions are created in order to respectively detect and visualise multivariate outliers, based on the MCD method. Finally, in a comparative perspective, *outliers_mahalanobis* and *plot_outliers_mahalanobis* are created in order to respectively detect and visualise multivariate outliers, based on the classical mahalanobis method. As an illustration, we used data collected on 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016). We focused on two variables: the sense of coherence [SOC-13 self report questionnaire, @Antonovsky_1987] and anxiety and depression symptoms [HSCL-25, @Derogatis_et_al_1974]. Figure 2 shows the output provided by *outliers_mad* applied on the SOC-13 and Figure 3 shows the plot provided by *plot_outliers_mad* on the same variable.
+In order to help researchers to detect and visualize outliers based on robust methods, we created an R package (see https://github.com/mdelacre/Routliers). *outliers_mad* and *plot_outliers_mad* functions are created in order to respectively detect and visualise univariate outliers, based on the MAD method. In the same way of thinking, *outliers_mcd* and *plot_outliers_mcd* functions are created in order to respectively detect and visualise multivariate outliers, based on the MCD method. Finally, in a comparative perspective, *outliers_mahalanobis* and *plot_outliers_mahalanobis* are created in order to respectively detect and visualise multivariate outliers, based on the classical mahalanobis method. As an illustration, we used data collected on 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016). We focused on two variables: the sense of coherence [SOC-13 self report questionnaire, @Antonovsky_1987] and anxiety and depression symptoms [HSCL-25, @Derogatis_et_al_1974]. Figure 3 shows the output provided by *outliers_mad* applied on the SOC-13 and Table 2 shows the plot provided by *plot_outliers_mad* on the same variable.
 
 ```{r, MADSOC, fig.cap="Univariate extreme values of sense of coherence [@Antonovsky_1987] detected by the MAD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)"}
 library(Routliers)
@@ -145,24 +264,28 @@ SOC <- rowMeans(Attacks[,c("soc1r","soc2r","soc3r","soc4","soc5","soc6","soc7r",
 plot_outliers_mad(SOC)
 ```
 
-```{r "", echo=FALSE, fig.width = 100,fig.height=100,out.width = '400px',fig.cap = "Output provided by the outliers_mad function when trying to detect univariate extreme values of sense of coherence [@Antonovsky_1987] on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)"}
-knitr::include_graphics("Rmarkdown folder/Fig 3.PNG")
+Table 2.
+*Output provided by the outliers_mad function when trying to detect univariate extreme values of sense of coherence [@Antonovsky_1987] on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)*
+```{r "", echo=FALSE, fig.width = 100,fig.height=100,out.width = '400px',fig.cap = ""}
+outliers_mad(SOC)
 ```
 
-Figure 4 shows the output provided by *outliers_mcd* performed in order to detect bivariate outliers when considering both the SOC-13 and the HSCL-25, and Figure 5 shows the plot provided by *plot_outliers_mcd* on the same variable.
+Figure 4 shows the plot provided by *plot_outliers_mcd* in order to detect bivariate outliers (in red on the plot) when considering both the SOC-13 and the HSCL-25. The *plot_outliers_mcd* function also returns two regression lines: one computed based on all data and one computed after outliers exclusion. It allows to easily observe if there is a strong impact of outliers on the regression line.
 
 ```{r, MCDSOC, fig.cap="Bivariate extreme values when considering the combination of sense of coherence [@Antonovsky_1987] and anxiety and depression symptoms [@Derogatis_et_al_1974] detected by the MCD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)"}
 data(Attacks)
 SOC <- rowMeans(Attacks[,c("soc1r","soc2r","soc3r","soc4","soc5","soc6","soc7r","soc8","soc9","soc10r","soc11","soc12","soc13")])
 HSC <- rowMeans(Attacks[,22:46])
-plot_outliers_mcd(cbind(SOC,HSC), h = .5,na.rm = TRUE)
+plot_outliers_mcd(cbind(SOC,HSC),h=.75)
 ```
 
-```{r "", echo=FALSE, fig.width = 100,fig.height=100,out.width = '400px',fig.cap = "Output provided by the outliers_mad function when trying to detect univariate extreme values of sense of coherence [@Antonovsky_1987] on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)"}
-knitr::include_graphics("Rmarkdown folder/Fig 5.PNG")
-```
+Table shows the output provided by *outliers_mcd* on the same variable. 
 
-The *plot_outliers_mcd* function returns a scatter dot where red points are detected bivariate outliers. Additionnaly, two regression lines are also plotted (i.e. with and without outliers). It allows do easily observe if there is a strong impact of outliers on the regression line.
+Table 3.
+*Output provided by the outliers_mad function when trying to detect univariate extreme values of sense of coherence [@Antonovsky_1987] on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)*
+```{r "", echo=FALSE, fig.width = 100,fig.height=100,out.width = '400px',fig.cap = ""}
+outliers_mad(SOC)
+```
 
 # Handling Outliers
 
@@ -176,7 +299,7 @@ Note also that some analyses do not have that many alternatives. For example, mi
 
 Second, removing outliers leads to the loss of a large amount of observations, especially in datasets with many variables, when all univariate outliers are removed for each variable. When researchers decide to remove outliers, they should clearly report how outliers were identified (preferably including the code that was used to identify the outliers), and when the way to manage outliers was not pre-registered, report the results with and without outliers. 
 
-*Recoding* outliers (Strategy 3) avoids the loss of a large amount of data. However, recoding data should rely on reasonable and convincing arguments. A common approach to recoding outliers is Winsorization [@Tukey_and_McLaughlin 1963] and, where all outliers are transformed to a value at a certain percentile of the data. The observed value of all data below a given percentile observation k (generally *k* = 5) is recoded into the value of the *k*th percentile observation (and similarly, all data above a given percentile observation, i.e., (100 - *k*), is recoded to the value of the (100 - *k*)th percentile). An alternative approach is to transform all data by applying a mathematical function to all observed data points (e.g., to take the log or arcsin) in order to reduce the variance and skewness of the data points [@Howell_1997]. We specify that, in our conception, such recoding solutions are only used for pragmatic reasons (i.e., avoiding the loss of too many data) but not for statistical reasons. When possible, it is always best to avoid such seemingly ad hoc transformations in order to cope with data loss. In other words: (1) we suggest to collect enough data so that removing outliers is possible without compromising the statistical power; (2) if outliers are believed to be random, then it is acceptable to leave them as they are; (3) if, for pragmatic reasons, researchers are forced to keep outliers that they detected as outliers influenced by moderators, the Winsorization or such transformations are acceptable in order to avoid a loss of power.
+*Recoding* outliers (Strategy 3) avoids the loss of a large amount of data. However, recoding data should rely on reasonable and convincing arguments. A common approach to recoding outliers is Winsorization [@Tukey_and_McLaughlin_1963] and, where all outliers are transformed to a value at a certain percentile of the data. The observed value of all data below a given percentile observation k (generally *k* = 5) is recoded into the value of the *k*th percentile observation (and similarly, all data above a given percentile observation, i.e., (100 - *k*), is recoded to the value of the (100 - *k*)th percentile). An alternative approach is to transform all data by applying a mathematical function to all observed data points (e.g., to take the log or arcsin) in order to reduce the variance and skewness of the data points [@Howell_1997]. We specify that, in our conception, such recoding solutions are only used for pragmatic reasons (i.e., avoiding the loss of too many data) but not for statistical reasons. When possible, it is always best to avoid such seemingly ad hoc transformations in order to cope with data loss. In other words: (1) we suggest to collect enough data so that removing outliers is possible without compromising the statistical power; (2) if outliers are believed to be random, then it is acceptable to leave them as they are; (3) if, for pragmatic reasons, researchers are forced to keep outliers that they detected as outliers influenced by moderators, the Winsorization or such transformations are acceptable in order to avoid a loss of power.
 
 It is crucial that researchers understand that handling outliers is a non-mathematical decision. Mathematics can help to set a rule and examine its behavior, but the decision of whether or how to remove, keep or recode outliers is non-mathematical. As such, it is up to researchers to make an educated guess for a criterion and technique and justify this choice. We developed the nomenclature of outliers provided earlier to help researchers to make such decisions. Error outliers need to be removed when detected as such, as they are not valid observations of the investigated population. Both interesting and random outliers can either be kept, recoded, or excluded. Ideally, interesting outliers should be removed and studied in future studies, and random outliers should be kept. Unfortunately, raw data generally do not allow researchers to easily differentiate interesting and random outliers from each other. In practice, we will therefore treat both of them similarly.  
 
