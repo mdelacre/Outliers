@@ -93,6 +93,12 @@
 \newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
 
 
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
 \usepackage{lineno}
 
 \linenumbers
@@ -184,7 +190,7 @@ Individual weights are computed by taking the distance between the X coordinate 
 
 \begin{equation} 
 \omega_i = \frac{(X_i-\bar{X})^2}{\sum(X_i-\bar{X})^2}
-\label{eq:individualslope}
+\label{eq:individualweight}
 \end{equation}
 
 As a consequence, the slope of the regression line can be computed as follows:
@@ -216,7 +222,7 @@ Unfortunately, more often than not, one has no way to know which distribution an
 
 In two previous papers, Leys et al. (2013) and Leys et al. (2018) reviewed the literature in the field of Psychology and showed that researchers primarily rely on two methods to detect outliers. For univariate outliers, psychologists consider values to be outliers whenever they are more extreme than the mean plus or minus the standard deviation multiplied by a constant, where this constant is usually 3, or 3.29 (Tabachnick \& Fidell, 2013). These cut-offs are based on the fact that when the data are normally distributed, 99.7\% of the observations fall within 3 standard deviations around the mean, and 99.9\% fall within 3.29 standard deviations. In order to detect multivariate outliers, most psychologists compute the Mahalanobis distance (Mahalanobis, 1930; see also Leys et al., 2018 for a mathematical description of the Mahalanobis distance). This method is based on the detection of values \enquote{too far} from the centroïd shaped by the cloud of the majority of data points (e.g., 99\%). Both these methods of detecting outliers rely on the mean and the standard deviation, which is not ideal because the mean and standard deviation themselves can be substantially influenced by the outliers they are meant to detect. Outliers pull the mean towards more extreme values (which is especially problematic when sample sizes are small), and because the mean is further away from the majority of data points, the standard deviation increases as well. This circularity in detecting outliers based on statistics that are themselves influenced by outliers can be prevented by the use of robust indicators of outliers.
 
-A useful concept when thinking about robust estimators is the \emph{breakdown point} (Donoho \& Huber, 1983), defined as the proportion of values set to infinity (and thus outlying) that can be part of the dataset without corrupting the estimator used to classify outliers. For example, the median has a breakdown point of .5, which is the highest possible breakdown point. A breakdown point of .5 means that the median allows 50\% of the observations to be set to infinity before the median breaks down. Consider, for the sake of illustration, the following two vectors: X= \{2, 3, 4, INF, INF, INF\} and Z=\{2, 3, 4, 5, INF, INF\}. The vector X consists of 6 observations of which half are infinite. Its median, computed by averaging 4 and INF, would equal infinity and therefore be meaningless. For the vector Z, where less than half of the observations are infinite, a meaningful median of 4.5 can still be calculated. Contrary to the median, both the standard deviation and the mean have a breakdown point of zero: one single observation set to infinity implies an infinite mean and an infinite standard deviation, rendering the method based on standard deviation around the mean useless. The same conclusion applies to the Mahalanobis distance, which also has a breakdown point of 0.5.
+A useful concept when thinking about robust estimators is the \emph{breakdown point} ("Donoho \& Huber, 1983), defined as the proportion of values set to infinity (and thus outlying) that can be part of the dataset without corrupting the estimator used to classify outliers. For example, the median has a breakdown point of .5, which is the highest possible breakdown point. A breakdown point of .5 means that the median allows 50\% of the observations to be set to infinity before the median breaks down. Consider, for the sake of illustration, the following two vectors: X= \{2, 3, 4, INF, INF, INF\} and Z=\{2, 3, 4, 5, INF, INF\}. The vector X consists of 6 observations of which half are infinite. Its median, computed by averaging 4 and INF, would equal infinity and therefore be meaningless. For the vector Z, where less than half of the observations are infinite, a meaningful median of 4.5 can still be calculated. Contrary to the median, both the standard deviation and the mean have a breakdown point of zero: one single observation set to infinity implies an infinite mean and an infinite standard deviation, rendering the method based on standard deviation around the mean useless. The same conclusion applies to the Mahalanobis distance, which also has a breakdown point of 0.5.
 
 Since the most common methods psychologists use to detect outliers do not rely on robust indicators, switching to robust indicators is our first recommendation to improve current practices. To detect univariate outliers, we recommend using the method based on the Median Absolute Deviation (MAD), as recommended by Leys et al. (2013). The MAD is calculated based on a range around the median, multiplied by a constant (with a default value of 1.4826). To detect multivariate outliers, we recommend using the method based on the MCD, as advised by Leys et al. (2018). The MCD is described as one of the best indicator to detect multivariate outliers since it has the highest possible breakdown point and since it uses the median, which is the the most robust location indicator in the presence of outliers. Note that, although any breakdown point ranging from 0 to .5 is possible with the MCD method, simulations by Leys et al. (2018) encourage the use of the MCD with a breakdown point of .25 (i.e., computing the mean and covariance terms using 75\% of all data) if there is no reason to suspect that more than 25\% of all data are multivariate outlying values. For R users, examples of applications of outliers detection based on the MAD and MCD methods are given at the end of the section. For SPSS users, refer to the seminal papers Leys et al. (2013) and Leys et al. (2018) to compute the MAD, MCD50 (breakdown point = .5) and MCD75 (breakdown point = .25).
 
@@ -232,8 +238,7 @@ In order to help researchers to detect and visualize outliers based on robust me
 \caption{\label{fig:MADSOC}Univariate extreme values of sense of coherence (Antonovsky, 1987) detected by the MAD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)}
 \end{figure}
 
-Table 3.
-
+Table 3.\\
 \emph{Output provided by the outliers\_mad function when trying to detect univariate extreme values of sense of coherence (Antonovsky, 1987) on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)}
 
 \begin{verbatim}
@@ -282,7 +287,7 @@ Table 4.
 \hypertarget{handling-outliers}{%
 \section{Handling Outliers}\label{handling-outliers}}
 
-After detecting the outliers, it is important to discriminate between \emph{error} outliers and other types of outliers. Error outliers should be corrected whenever possible. For example, when a mistake occurs while entering questionnaire data, it is still possible to go back to the raw data to find the correct value. When it is not possible to retrieve the correct value, outliers should be deleted. To manage other types of outliers (i.e., interesting outliers and random outliers), researchers have to choose among 3 strategies, which we summarize based on the work by Aguinis et al. (2013) as 1) keeping the outliers, 2) removing the outliers, or 3) recoding the outliers.
+After detecting the outliers, it is important to discriminate between \emph{error} outliers and other types of outliers. Error outliers should be corrected whenever possible. For example, when a mistake occurs while entering questionnaire data, it is still possible to go back to the raw data to find the correct value. When it is not possible to retrieve the correct value, outliers should be deleted. To manage other types of outliers (i.e., interesting outliers and random outliers), researchers have to choose among 3 strategies, which we summarize based on the work by Aguinis et al. (2013) as (1) keeping the outliers, (2) removing the outliers, or (3) recoding the outliers.
 
 \emph{Keeping} outliers (Strategy 1) is a good decision if most of these outliers rightfully belong to the distribution of interest (e.g., provided that we have a normal distribution, they are simply the 0.27\% of values expected to be further away from the mean than three standard deviations). However, keeping outliers in the dataset can be problematic for several reasons if these outliers do in fact belong to an alternative distribution. First, a test could become significant because of the presence of outliers and therefore, the results of the study can depend on a single or few data points, which questions the robustness of the findings. Second, the presence of outliers can jeopardize the assumptions of the parametric tests (mainly normality of residuals and equality of variances), especially in small sample datasets. This would require a switch from parametric tests to alternative robust tests, such as tests based on the median or ranks (Sheskin, 2004), or bootstrapping methods (Efron \& Tibshirani, 1994, p. @Hall\_1986), while such approaches might not be needed when outliers that do not belong to the underlying distribution are removed.
 
@@ -380,7 +385,7 @@ Aguinis, H., Gottfredson, R.-K., \& Joo, H. (2013). Best-practice recommendation
 Antonovsky, A. (1987). \emph{Unraveling the mystery of health. How people manage stress and stay well} (Jossey-Bass Publishers.). San Francisco.
 
 \leavevmode\hypertarget{ref-Bakker_and_Wicherts_2014}{}%
-Bakker, M., \& Wicherts, J.-M. (2014). Outlier removal, sum scores, and the inflation of the type i error rate in independent samples t tests: The power of alternatives and recommendations. \emph{Psychological Methods}, \emph{19}(3), 409--427. doi:\href{https://doi.org/10.1037/met0000014}{10.1037/met0000014}
+Bakker, M., \& Wicherts, J.-M. (2014). Outlier removal, sum scores, and the inflation of the Type I error rate in independent samples t tests: The power of alternatives and recommendations. \emph{Psychological Methods}, \emph{19}(3), 409--427. doi:\href{https://doi.org/10.1037/met0000014}{10.1037/met0000014}
 
 \leavevmode\hypertarget{ref-Chang_et_al_2018}{}%
 Chang, C.-L., McAleer, M., \& Wong, W.-K. (2018). Big data, computational science, economics, finance, marketing, management, and psychology: Connections. \emph{Journal of Risk and Financial Management}, \emph{11}(1), 15. doi:\href{https://doi.org/10.3390/jrfm11010015}{10.3390/jrfm11010015}
@@ -392,10 +397,10 @@ Cohen, J., Cohen, P., West, S. G., \& Aiken, L. S. (2003). \emph{Applied multipl
 Cousineau, D., \& Chartier, S. (2010). Outliers detection and treatment: A review. \emph{International Journal of Psychological Research}, \emph{3}(1), 58--67. doi:\href{https://doi.org/10.21500/20112084.844}{10.21500/20112084.844}
 
 \leavevmode\hypertarget{ref-Derogatis_et_al_1974}{}%
-Derogatis, L.-R., Lipman, R.-S., Rickels, K., Uhlenhuth, E.-H., \& Covi, L. (1974). The hopkins symptom checklist (hscl): A self‐report symptom inventory. \emph{Behavioral Science}, \emph{19}(1), 1--15.
+Derogatis, L.-R., Lipman, R.-S., Rickels, K., Uhlenhuth, E.-H., \& Covi, L. (1974). The Hopkins Symptom Checklist (HSCL): A self‐report symptom inventory. \emph{Behavioral Science}, \emph{19}(1), 1--15.
 
 \leavevmode\hypertarget{ref-Donoho_and_Huber_1983}{}%
-Donoho, D.-L., \& Huber, P.-J. (1983). The notion of breakdown point. In P.-J. Bicker, K. Diksum, \& J.-L. Hodges (Eds.), \emph{A festschrift for erich l. Lehmann}. California: Wadsworth.
+"Donoho, D.-L., \& Huber, P.-J. (1983). "The notion of breakdown point". In P.-J. "Bickel, K. Diksum, \& J.-L. Hodges (Eds.), \emph{"A Festschrift for Erich L. Lehmann"}. "California": "Wadsworth".
 
 \leavevmode\hypertarget{ref-Efron_Tibshirani_1994}{}%
 Efron, B., \& Tibshirani, R.-J. (1994). \emph{An introduction to the bootstrap} (Chapman \& Hall.). New York.
@@ -416,7 +421,7 @@ Klein, O., Hardwicke, T.-E., Aust, F., Breuer, J., Danielsson, H., Mohr, A.-H., 
 Kline, R.-B. (2015). \emph{Principles and practice of structural equation modeling} (Guilford publications.). London.
 
 \leavevmode\hypertarget{ref-Leys_et_al_2018}{}%
-Leys, C., Klein, O., Dominicy, Y., \& Ley, C. (2018). Detecting multivariate outliers: Use a robust variant of the mahalanobis distance. \emph{Journal of Experimental Social Psychology}, \emph{74}, 150--156. doi:\href{https://doi.org/10.1016/j.jesp.2017.09.011}{10.1016/j.jesp.2017.09.011}
+Leys, C., Klein, O., Dominicy, Y., \& Ley, C. (2018). Detecting multivariate outliers: Use a robust variant of the Mahalanobis distance. \emph{Journal of Experimental Social Psychology}, \emph{74}, 150--156. doi:\href{https://doi.org/10.1016/j.jesp.2017.09.011}{10.1016/j.jesp.2017.09.011}
 
 \leavevmode\hypertarget{ref-Leys_et_al_2013}{}%
 Leys, C., Ley, C., Klein, O., Bernard, P., \& Licata, L. (2013). Detecting outliers: Do not use standard deviation around the mean, use absolute deviation around the median. \emph{Journal of Experimental Social Psychology}, \emph{49}(4), 764--766. doi:\href{https://doi.org/10.1016/j.jesp.2013.03.013}{10.1016/j.jesp.2013.03.013}
@@ -425,7 +430,7 @@ Leys, C., Ley, C., Klein, O., Bernard, P., \& Licata, L. (2013). Detecting outli
 Leys, C., \& Schumann, S. (2010). A nonparametric method to analyze interactions: The adjusted rank transform test. \emph{Journal of Experimental Social Psychology}, \emph{46}(4), 684--688. doi:\href{https://doi.org/10.1016/j.jesp.2010.02.007}{10.1016/j.jesp.2010.02.007}
 
 \leavevmode\hypertarget{ref-Mahalanobis_1930}{}%
-Mahalanobis, P.-C. (1930). On tests and meassures of groups divergence, theoretical formulae. \emph{International Journal of the Asiatic Society of Bengal}, \emph{26}, 541--588.
+Mahalanobis, P.-C. (1930). On tests and measures of groups divergence, theoretical formulae. \emph{International Journal of the Asiatic Society of Bengal}, \emph{26}, 541--588.
 
 \leavevmode\hypertarget{ref-McClelland_2000}{}%
 McClelland. (2000). \emph{Nasty data} (Handbook of research methods in social psychology.). Cambridge, MA.

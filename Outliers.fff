@@ -2,6 +2,27 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
+\includegraphics{Outliers_files/figure-latex/individualslopes-1.pdf}
+\caption{\label{fig:individualslopes}Illustration of individual slopes of lines linking all data of the scatter dot and the G-point}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{Outliers_files/figure-latex/outimpact-1.pdf}
+\caption{\label{fig:outimpact}Impact of an individual having extremely large or low coordinate on the Y axis, on the regression slope, as a function of its coordinate on the X axis}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
 \includegraphics{Outliers_files/figure-latex/MADSOC-1.pdf}
 \caption{\label{fig:MADSOC}Univariate extreme values of sense of coherence (Antonovsky, 1987) detected by the MAD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{Outliers_files/figure-latex/MCDSOC-1.pdf}
+\caption{\label{fig:MCDSOC}Bivariate extreme values when considering the combination of sense of coherence (Antonovsky, 1987) and anxiety and depression symptoms (Derogatis et al., 1974) detected by the MCD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)}
 \end{figure*}

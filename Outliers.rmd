@@ -40,6 +40,7 @@ documentclass: apa6
 
 draft: no
 fig_caption: no
+figsintext: no
 floatsintext: yes
 footnotelist: no
 keywords: outliers; preregistration; robust detection; Malahanobis distance; median
@@ -140,7 +141,7 @@ Individual weights are computed by taking the distance between the X coordinate 
 
 \begin{equation} 
 \omega_i = \frac{(X_i-\bar{X})^2}{\sum(X_i-\bar{X})^2}
-(\#eq:individualslope)
+(\#eq:individualweight)
 \end{equation} 
 
 As a consequence, the slope of the regression line can be computed as follows:
@@ -264,10 +265,9 @@ SOC <- rowMeans(Attacks[,c("soc1r","soc2r","soc3r","soc4","soc5","soc6","soc7r",
 plot_outliers_mad(SOC)
 ```
 
-Table 3.
-
+Table 3.  
 *Output provided by the outliers_mad function when trying to detect univariate extreme values of sense of coherence [@Antonovsky_1987] on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)*
-```{r "", echo=FALSE, fig.width = 100,fig.height=100,out.width = '400px',fig.cap = ""}
+```{r "", echo=FALSE, fig.width = 100,fig.height=100,out.width = '400px',fig.cap = "",echo = F}
 outliers_mad(SOC)
 ```
 
@@ -290,7 +290,7 @@ outliers_mcd(cbind(SOC,HSC),h=.75)
 
 # Handling Outliers
 
-After detecting the outliers, it is important to discriminate between *error* outliers and other types of outliers. Error outliers should be corrected whenever possible. For example, when a mistake occurs while entering questionnaire data, it is still possible to go back to the raw data to find the correct value. When it is not possible to retrieve the correct value, outliers should be deleted. To manage other types of outliers (i.e., interesting outliers and random outliers), researchers have to choose among 3 strategies, which we summarize based on the work by @Aguinis_et_al_2013 as 1) keeping the outliers, 2) removing the outliers, or 3) recoding the outliers. 
+After detecting the outliers, it is important to discriminate between *error* outliers and other types of outliers. Error outliers should be corrected whenever possible. For example, when a mistake occurs while entering questionnaire data, it is still possible to go back to the raw data to find the correct value. When it is not possible to retrieve the correct value, outliers should be deleted. To manage other types of outliers (i.e., interesting outliers and random outliers), researchers have to choose among 3 strategies, which we summarize based on the work by @Aguinis_et_al_2013 as (1) keeping the outliers, (2) removing the outliers, or (3) recoding the outliers.  
 
 *Keeping* outliers (Strategy 1) is a good decision if most of these outliers rightfully belong to the distribution of interest (e.g., provided that we have a normal distribution, they are simply the 0.27% of values expected to be further away from the mean than three standard deviations). However, keeping outliers in the dataset can be problematic for several reasons if these outliers do in fact belong to an alternative distribution. First, a test could become significant because of the presence of outliers and therefore, the results of the study can depend on a single or few data points, which questions the robustness of the findings. Second, the presence of outliers can jeopardize the assumptions of the parametric tests (mainly normality of residuals and equality of variances), especially in small sample datasets. This would require a switch from parametric tests to alternative robust tests, such as tests based on the median or ranks [@Sheskin_2004], or bootstrapping methods [@Efron_Tibshirani_1994,@Hall_1986], while such approaches might not be needed when outliers that do not belong to the underlying distribution are removed.
 

@@ -9,12 +9,23 @@ Error\strut
 \begin{minipage}[t]{0.15\columnwidth}\raggedright
 Interesting\strut
 \end{minipage} & \begin{minipage}[t]{0.79\columnwidth}\raggedright
-\emph{e.g., moderator underlying a potentially interesing psychological process}\strut
+\emph{e.g., moderator underlying a potentially interesting psychological process}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.15\columnwidth}\raggedright
 Random\strut
 \end{minipage} & \begin{minipage}[t]{0.79\columnwidth}\raggedright
 \emph{e.g., a very large value of a given distribution}\strut
 \end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+\efloatseparator
+ 
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+\textbf{Do their follow a pattern?} & Rare & Numerous\tabularnewline
+\midrule
+\endhead
+\textbf{No} & Situation 1 & Situation 2\tabularnewline
+\textbf{Yes} & Situation 3 & Situation 4\tabularnewline
 \bottomrule
 \end{longtable}
