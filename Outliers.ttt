@@ -1,19 +1,19 @@
 \begin{longtable}[]{@{}ll@{}}
 \toprule
-\endhead
-\begin{minipage}[t]{0.15\columnwidth}\raggedright
+\begin{minipage}[t]{0.16\columnwidth}\raggedright\strut
 Error\strut
-\end{minipage} & \begin{minipage}[t]{0.79\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.78\columnwidth}\raggedright\strut
 \emph{e.g., coding error}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.15\columnwidth}\raggedright
+\begin{minipage}[t]{0.16\columnwidth}\raggedright\strut
 Interesting\strut
-\end{minipage} & \begin{minipage}[t]{0.79\columnwidth}\raggedright
-\emph{e.g., moderator underlying a potentially interesting psychological process}\strut
+\end{minipage} & \begin{minipage}[t]{0.78\columnwidth}\raggedright\strut
+\emph{e.g., moderator underlying a potentially interesting psychological
+process}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.15\columnwidth}\raggedright
+\begin{minipage}[t]{0.16\columnwidth}\raggedright\strut
 Random\strut
-\end{minipage} & \begin{minipage}[t]{0.79\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.78\columnwidth}\raggedright\strut
 \emph{e.g., a very large value of a given distribution}\strut
 \end{minipage}\tabularnewline
 \bottomrule
@@ -29,3 +29,5 @@ Random\strut
 \textbf{Yes} & Situation 3 & Situation 4\tabularnewline
 \bottomrule
 \end{longtable}
+\efloatseparator
+ 
