@@ -257,36 +257,38 @@ Finally, it is important to specify that outlier detection is a procedure that i
 
 In order to help researchers to detect and visualize outliers based on robust methods, we created an R package (see https://github.com/mdelacre/Routliers). The *outliers_mad* and *plot_outliers_mad* functions were built in order to respectively detect and visualise univariate outliers, based on the MAD method. In the same way of thinking, *outliers_mcd* and *plot_outliers_mcd* functions are created in order to respectively detect and visualise multivariate outliers, based on the MCD method. Finally, in a comparative perspective, *outliers_mahalanobis* and *plot_outliers_mahalanobis* are created in order to respectively detect and visualise multivariate outliers, based on the classical Mahalanobis method. As an illustration, we used data collected on 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016). We focused on two variables: the sense of coherence [SOC-13 self report questionnaire, @Antonovsky_1987] and anxiety and depression symptoms [HSCL-25, @Derogatis_et_al_1974]. Figure 3 shows the output provided by *outliers_mad* applied on the SOC-13 and Table 3 shows the plot provided by *plot_outliers_mad* on the same variable.
 
-```{r, MADSOC, fig.cap="Univariate extreme values of sense of coherence [@Antonovsky_1987] detected by the MAD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)"}
-library(Routliers)
-data(Attacks)
-SOC <- rowMeans(Attacks[,c("soc1r","soc2r","soc3r","soc4","soc5","soc6","soc7r","soc8","soc9","soc10r","soc11","soc12","soc13")])
-plot_outliers_mad(SOC)
-```
-
 Table 3.  
 *Output provided by the outliers_mad function when trying to detect univariate extreme values of sense of coherence [@Antonovsky_1987] on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)*
 ```{r "", echo=FALSE, fig.width = 100,fig.height=100,out.width = '400px',fig.cap = "",echo = F}
-outliers_mad(SOC)
+library(Routliers)
+data(Attacks)
+SOC <- rowMeans(Attacks[,c("soc1r","soc2r","soc3r","soc4","soc5","soc6","soc7r","soc8","soc9","soc10r","soc11","soc12","soc13")])
+res <- outliers_mad(x = SOC)
+res
+```
+
+```{r, MADSOC, fig.cap="Univariate extreme values of sense of coherence [@Antonovsky_1987] detected by the MAD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)"}
+plot_outliers_mad(res,x = SOC)
 ```
 
 Figure 4 shows the plot provided by *plot_outliers_mcd* in order to detect bivariate outliers (in red on the plot) when considering both the SOC-13 and the HSCL-25. The *plot_outliers_mcd* function also returns two regression lines: one computed based on all data and one computed after the exclusion of outliers. It allows researchers to easily observe if there is a strong impact of outliers on the regression line.
 
-```{r, MCDSOC, fig.cap="Bivariate extreme values when considering the combination of sense of coherence [@Antonovsky_1987] and anxiety and depression symptoms [@Derogatis_et_al_1974] detected by the MCD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)"}
-data(Attacks)
-SOC <- rowMeans(Attacks[,c("soc1r","soc2r","soc3r","soc4","soc5","soc6","soc7r","soc8","soc9","soc10r","soc11","soc12","soc13")])
-HSC <- rowMeans(Attacks[,21:45])
-plot_outliers_mcd(cbind(SOC,HSC),h=.75)
-```
- 
 Table 4 shows the output provided by *outliers_mcd* on the same variable. 
 
 Table 4.
 *Output provided by the outliers_mcd function when trying to detect bivariate extreme values, when considering both the SOC-13 and the HSCL-25, on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)*
 ```{r "", echo=FALSE, fig.width = 100,fig.height=100,out.width = '400px',fig.cap = ""}
-outliers_mcd(cbind(SOC,HSC),h=.75)
+data(Attacks)
+SOC <- rowMeans(Attacks[,c("soc1r","soc2r","soc3r","soc4","soc5","soc6","soc7r","soc8","soc9","soc10r","soc11","soc12","soc13")])
+HSC <- rowMeans(Attacks[,21:45])
+res2 <- outliers_mcd(x = cbind(SOC,HSC),h=.75)
+res2
 ```
 
+```{r, MCDSOC, fig.cap="Bivariate extreme values when considering the combination of sense of coherence [@Antonovsky_1987] and anxiety and depression symptoms [@Derogatis_et_al_1974] detected by the MCD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)"}
+plot_outliers_mcd(res2, x = cbind(SOC,HSC))
+```
+ 
 # Handling Outliers
 
 After detecting the outliers, it is important to discriminate between *error* outliers and other types of outliers. Error outliers should be corrected whenever possible. For example, when a mistake occurs while entering questionnaire data, it is still possible to go back to the raw data to find the correct value. When it is not possible to retrieve the correct value, outliers should be deleted. To manage other types of outliers (i.e., interesting outliers and random outliers), researchers have to choose among 3 strategies, which we summarize based on the work by @Aguinis_et_al_2013 as (1) keeping the outliers, (2) removing the outliers, or (3) recoding the outliers.  

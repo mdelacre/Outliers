@@ -226,12 +226,6 @@ Finally, it is important to specify that outlier detection is a procedure that i
 
 In order to help researchers to detect and visualize outliers based on robust methods, we created an R package (see \url{https://github.com/mdelacre/Routliers}). The \emph{outliers\_mad} and \emph{plot\_outliers\_mad} functions were built in order to respectively detect and visualise univariate outliers, based on the MAD method. In the same way of thinking, \emph{outliers\_mcd} and \emph{plot\_outliers\_mcd} functions are created in order to respectively detect and visualise multivariate outliers, based on the MCD method. Finally, in a comparative perspective, \emph{outliers\_mahalanobis} and \emph{plot\_outliers\_mahalanobis} are created in order to respectively detect and visualise multivariate outliers, based on the classical Mahalanobis method. As an illustration, we used data collected on 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016). We focused on two variables: the sense of coherence (SOC-13 self report questionnaire, Antonovsky, 1987) and anxiety and depression symptoms (HSCL-25, Derogatis, Lipman, Rickels, Uhlenhuth, \& Covi, 1974). Figure 3 shows the output provided by \emph{outliers\_mad} applied on the SOC-13 and Table 3 shows the plot provided by \emph{plot\_outliers\_mad} on the same variable.
 
-\begin{figure}
-\centering
-\includegraphics{Outliers_files/figure-latex/MADSOC-1.pdf}
-\caption{\label{fig:MADSOC}Univariate extreme values of sense of coherence (Antonovsky, 1987) detected by the MAD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)}
-\end{figure}
-
 Table 3.\\
 \emph{Output provided by the outliers\_mad function when trying to detect univariate extreme values of sense of coherence (Antonovsky, 1987) on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)}
 
@@ -253,13 +247,13 @@ Table 3.\\
 ##              4              0              4
 \end{verbatim}
 
-Figure 4 shows the plot provided by \emph{plot\_outliers\_mcd} in order to detect bivariate outliers (in red on the plot) when considering both the SOC-13 and the HSCL-25. The \emph{plot\_outliers\_mcd} function also returns two regression lines: one computed based on all data and one computed after the exclusion of outliers. It allows researchers to easily observe if there is a strong impact of outliers on the regression line.
-
 \begin{figure}
 \centering
-\includegraphics{Outliers_files/figure-latex/MCDSOC-1.pdf}
-\caption{\label{fig:MCDSOC}Bivariate extreme values when considering the combination of sense of coherence (Antonovsky, 1987) and anxiety and depression symptoms (Derogatis et al., 1974) detected by the MCD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)}
+\includegraphics{Outliers_files/figure-latex/MADSOC-1.pdf}
+\caption{\label{fig:MADSOC}Univariate extreme values of sense of coherence (Antonovsky, 1987) detected by the MAD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)}
 \end{figure}
+
+Figure 4 shows the plot provided by \emph{plot\_outliers\_mcd} in order to detect bivariate outliers (in red on the plot) when considering both the SOC-13 and the HSCL-25. The \emph{plot\_outliers\_mcd} function also returns two regression lines: one computed based on all data and one computed after the exclusion of outliers. It allows researchers to easily observe if there is a strong impact of outliers on the regression line.
 
 Table 4 shows the output provided by \emph{outliers\_mcd} on the same variable.
 
@@ -275,8 +269,14 @@ Table 4.
 ## 
 ## Number of detected outliers:
 ## total 
-##    54
+##    53
 \end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics{Outliers_files/figure-latex/MCDSOC-1.pdf}
+\caption{\label{fig:MCDSOC}Bivariate extreme values when considering the combination of sense of coherence (Antonovsky, 1987) and anxiety and depression symptoms (Derogatis et al., 1974) detected by the MCD method on a sample of 2077 subjects the day after the terrorist attacks in Brussels (on the morning of 22 March 2016)}
+\end{figure}
 
 \hypertarget{handling-outliers}{%
 \section{Handling Outliers}\label{handling-outliers}}
