@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.1.2)  1 APR 2019 22:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.1.2)  12 APR 2019 11:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1053,7 +1053,7 @@ Here is how much of TeX's memory you used:
  17024 multiletter control sequences out of 15000+600000
  77592 words of font info for 80 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 43i,11n,47p,1699b,524s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,11n,47p,1695b,524s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/Administrateur/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/l
 m/lm-ec.enc}{c:/Users/Administrateur/AppData/Roaming/TinyTeX/texmf-dist/fonts/e
 nc/dvips/lm/lm-mathex.enc}{c:/Users/Administrateur/AppData/Roaming/TinyTeX/texm
@@ -1074,7 +1074,7 @@ pe1/public/lm/lmri12.pfb><c:/Users/Administrateur/AppData/Roaming/TinyTeX/texmf
 -dist/fonts/type1/public/lm/lmss8.pfb><c:/Users/Administrateur/AppData/Roaming/
 TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/Administrateur/Ap
 pData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Outliers.pdf (28 pages, 378226 bytes).
+Output written on Outliers.pdf (28 pages, 378037 bytes).
 PDF statistics:
  369 PDF objects out of 1000 (max. 8388607)
  315 compressed objects within 4 object streams
